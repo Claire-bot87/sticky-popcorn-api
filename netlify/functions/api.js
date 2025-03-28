@@ -1,47 +1,14 @@
-import serverless from "serverless-http";
-import express from "express";
-import mongoose, {mongo} from "mongoose";
-import mongoSanitize from "express-mongo-sanitize";
-import "dotenv/config"
-
-
-import cors from "cors"
-
-import logger from "../../middleware/logger.js"
-import errorHandler from "../../middleware/errorHandler.js"
-
-import userController from '../../controllers/userController.js'
-
-
-// Controllers/Routers
-import movieController from '../../controllers/movieController.js'
-import reviewController from "../../controllers/reviewController.js"
-
-
-const app = express()
-const port = process.env.port || 3000
-app.use(cors())
-app.use(express.json()) //# parses JSON body type, adding them to the req.body
-app.use(mongoSanitize()) //# prevent cody injections
-app.use(logger) //# logs out key information on incoming requests
-app.use('/', userController)
-
-// Controllers / Routes
-app.use('/', movieController)
-app.use('/', reviewController)
-app.use(errorHandler)
-
-//? Server connection
-const establishServerConnections = async () => {
-    try {
-      
-      await mongoose.connect(process.env.MONGODB_URI)
-      console.log('🤖 Database connection established')
-    } catch (error) {
-        console.log(error)
-    }
+export async function handler(event, context) {
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "https://stickypopcorn1.netlify.app", // Frontend domain
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Credentials": "true",
+      "Content-Security-Policy":
+        "default-src 'self' https://stickypopcorn1.netlify.app; connect-src 'self' https://stickypopcorn1.netlify.app https://stickypopcorn.netlify.app; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';",
+    },
+    body: JSON.stringify({ message: "Netlify Functions are working!" }),
+  };
 }
-
-establishServerConnections()
-
-export const handler = serverless(app)
