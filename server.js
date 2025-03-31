@@ -19,14 +19,14 @@ import reviewController from "./controllers/reviewController.js"
 
 const app = express()
 const port = process.env.port || 3000
-// app.use(cors())
-app.use(
-  cors({
-    origin: "https://stickypopcorn1.netlify.app", // Only allow requests from your frontend
-    methods: "GET,POST,PUT,DELETE", // Allow these methods
-    credentials: true, // If using cookies or authorization headers
-  })
-)
+app.use(cors())
+// app.use(
+//   cors({
+//     origin: "https://stickypopcorn1.netlify.app", // Only allow requests from your frontend
+//     methods: "GET,POST,PUT,DELETE", // Allow these methods
+//     credentials: true, // If using cookies or authorization headers
+//   })
+// )
 
 app.get("/", (req, res) => {
   res.json({ message: "CORS is working!" });
