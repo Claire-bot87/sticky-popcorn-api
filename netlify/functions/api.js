@@ -21,7 +21,11 @@ const port = process.env.port || 3000
 
 
 // Middleware
-app.use(cors())
+app.use(cors(
+  {
+    origin: process.env.ORIGIN
+  }
+))
 app.use(express.json()) //# parses JSON body type, adding them to the req.body
 app.use(mongoSanitize()) //# prevent cody injections
 app.use(logger) //# logs out key information on incoming requests
