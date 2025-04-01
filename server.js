@@ -28,19 +28,22 @@ app.use(cors())
 //   })
 // )
 
-app.get("/", (req, res) => {
-  res.json({ message: "CORS is working!" });
-})
+// app.get("/", (req, res) => {
+//   res.json({ message: "CORS is working!" });
+// })
 
 app.use(express.json()) //# parses JSON body type, adding them to the req.body
 app.use(mongoSanitize()) //# prevent cody injections
 app.use(logger) //# logs out key information on incoming requests
-app.use('/', userController)
-app.use(errorHandler)
+
+
 
 // Controllers / Routes
+app.use('/', userController)
 app.use('/', movieController)
 app.use('/', reviewController)
+
+app.use(errorHandler)
 
 //? Server connection
 const establishServerConnections = async () => {
