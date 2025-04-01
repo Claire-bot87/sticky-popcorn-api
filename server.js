@@ -9,10 +9,9 @@ import cors from "cors"
 import logger from "./middleware/logger.js"
 import errorHandler from "./middleware/errorHandler.js"
 
-import userController from './controllers/userController.js'
-
 
 // Controllers/Routers
+import userController from './controllers/userController.js'
 import movieController from './controllers/movieController.js'
 import reviewController from "./controllers/reviewController.js"
 
@@ -20,26 +19,9 @@ import reviewController from "./controllers/reviewController.js"
 const app = express()
 const port = process.env.port || 3000
 
-app.use(cors({
-  origin: true, // Reflect the request origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-}))
 
-//app.use(cors())
-
-// app.use(
-//   cors({
-//     origin: "https://stickypopcorn1.netlify.app", // Only allow requests from your frontend
-//     methods: "GET,POST,PUT,DELETE", // Allow these methods
-//     credentials: true, // If using cookies or authorization headers
-//   })
-// )
-
-// app.get("/", (req, res) => {
-//   res.json({ message: "CORS is working!" });
-// })
-
+// Middleware
+app.use(cors())
 app.use(express.json()) //# parses JSON body type, adding them to the req.body
 app.use(mongoSanitize()) //# prevent cody injections
 app.use(logger) //# logs out key information on incoming requests
